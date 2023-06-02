@@ -16,8 +16,8 @@ var time2 = "0:00";
 var time3 = "0:00";
 var time4 = "0:00";
 var time5 = "0:00";
-let crossWin = new Audio('audio/XWIN.mp3');
-let circleWin = new Audio('audio/OWIN.mp3');
+let crossWin = new Audio('audio/XWin.mp3');
+let circleWin = new Audio('audio/OWin.mp3');
 
 function updateStat() {
     document.getElementById('sX').innerHTML = statx;
