@@ -8,8 +8,6 @@ step = false,
 circle = `<svg class = "circle"> <circle r="45" cx="58" cy="58" stroke-width="10" fill = "none" stroke-linecap="round"/> </svg>`,
 cross =  `<svg class = "cross"> <line class = "one" x1="15" y1="15" x2="100" y2="100" stroke-width="10" stroke-linecap="round" /><line class = "two" x1="100" y1="15" x2="15" y2="100" stroke-width="10" stroke-linecap="round" /> </svg>`,
 count = 0;
-countnewgame = "0";
-countnewgame2 = "0";
 statx = 0;
 stato = 0;
 statd = 0;
@@ -68,26 +66,11 @@ function newGame() {
     {statd++;}
     sec = 0;
     min = 0;
-    if (countnewgame == 0) {
-        time1 = p.textContent;
-        countnewgame++;
-    }
-    else if (countnewgame == 1) {
-        time2 = p.textContent;
-        countnewgame++;
-    }
-    else if (countnewgame == 2) {
-        time3 = p.textContent;
-        countnewgame++;
-    }
-    else if (countnewgame == 3) {
-        time4 = p.textContent;
-        countnewgame++;
-    }
-    else if (countnewgame == 4) {
-        time5 = p.textContent;
-        countnewgame = 0;
-    }
+    time5 = time4;
+    time4 = time3;
+    time3 = time2;
+    time2 = time1;
+    time1 = p.textContent;
     p.textContent = "0:00";
     updateStat();
     timer();
