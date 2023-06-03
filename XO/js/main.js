@@ -16,8 +16,15 @@ var time2 = "0:00";
 var time3 = "0:00";
 var time4 = "0:00";
 var time5 = "0:00";
+timeIndex1 = 0;
+timeIndex2 = 0;
+timeIndex3 = 0;
+timeIndex4 = 0;
+timeIndex5 = 0;
+timerstart = 0;
 let crossWin = new Audio('audio/XWin.mp3');
 let circleWin = new Audio('audio/OWin.mp3');
+let XOWin = new Audio('audio/XOWin.mp3');
 
 function updateStat() {
     document.getElementById('sX').innerHTML = statx;
@@ -28,6 +35,11 @@ function updateStat() {
     document.getElementById('Time3').innerHTML = time3;
     document.getElementById('Time4').innerHTML = time4;
     document.getElementById('Time5').innerHTML = time5;
+    document.getElementById('TimeIndex1').innerHTML = timeIndex1;
+    document.getElementById('TimeIndex2').innerHTML = timeIndex2;
+    document.getElementById('TimeIndex3').innerHTML = timeIndex3;
+    document.getElementById('TimeIndex4').innerHTML = timeIndex4;
+    document.getElementById('TimeIndex5').innerHTML = timeIndex5;
 }
 
 function stepCross(target) {
@@ -41,6 +53,10 @@ function stepCross(target) {
     crossAudio.play();
     count++;
     step = true;
+    if (timerstart == 0) {
+        timer();
+        timerstart++;
+    }
 }
 
 function stepCircle(target) {
@@ -54,13 +70,19 @@ function stepCircle(target) {
     circleAudio.play();
     count++;
     step = false;
+    if (timerstart == 0) {
+        timer();
+        timerstart++;
+    }
 }
 
 function newGame() {
     circleWin.currentTime = 0;
     crossWin.currentTime = 0;
+    XOWin.currentTime = 0;
     circleWin.pause();
     crossWin.pause();
+    XOWin.pause();
     step = false;
     if (result.innerText == "Ничья")
     {statd++;}
@@ -71,9 +93,17 @@ function newGame() {
     time3 = time2;
     time2 = time1;
     time1 = p.textContent;
+    timeIndex5 = timeIndex4;
+    timeIndex4 = timeIndex3;
+    timeIndex3 = timeIndex2;
+    timeIndex2 = timeIndex1;
+    timeIndex1++;
+    timerstart = 0;
+
+
     p.textContent = "0:00";
     updateStat();
-    timer();
+
     count = 0;
     result.innerText = '';
     fields.forEach(item => {
@@ -81,7 +111,7 @@ function newGame() {
         item.classList.remove('x', 'o', 'active');
     });
     modal.style.display = 'none';
-    game.addEventListener('click', init);
+    game.addEventListener('mouseup', init);
 };
 
 function init(e) {
@@ -144,6 +174,7 @@ if (count == 9) {
     result.innerText = "Ничья";
     game.removeEventListener('click', init);
     modal.style.display = 'block';
+    XOWin.play();
     clearTimeout(t);
     return;
 }
@@ -151,7 +182,7 @@ if (count == 9) {
 }
 
 btnGame.addEventListener('click', newGame);
-game.addEventListener('click', init);
+game.addEventListener('mouseup', init);
 
 
 //ТАЙМЕР
@@ -176,6 +207,4 @@ function add() {
 function timer() {
     t = setTimeout(add, 1000);
 }
-
-timer();
 

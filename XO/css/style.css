@@ -142,7 +142,7 @@ body {
     border-radius: 8px;
 }
 
-.Time table, .Time tr {
+.Time table, .Time tr, .Time td  {
     border: 2px solid #000;
     padding: 5px;
     text-align: center;
@@ -189,3 +189,4 @@ body {
     font-size: 14pt;
     cursor:pointer;
   }
+  
