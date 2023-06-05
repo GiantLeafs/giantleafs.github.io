@@ -22,6 +22,7 @@ timeIndex3 = 0;
 timeIndex4 = 0;
 timeIndex5 = 0;
 timerstart = 0;
+playerstatus = 0;
 let crossWin = new Audio('audio/XWin.mp3');
 let circleWin = new Audio('audio/OWin.mp3');
 let XOWin = new Audio('audio/XOWin.mp3');
@@ -57,6 +58,10 @@ function stepCross(target) {
         timer();
         timerstart++;
     }
+    if (playerstatus == 0) {
+        PlayerA.innerText = "Сейчас ходит: O"
+        playerstatus++;
+    }
 }
 
 function stepCircle(target) {
@@ -73,6 +78,10 @@ function stepCircle(target) {
     if (timerstart == 0) {
         timer();
         timerstart++;
+    }
+    if (playerstatus == 1) {
+        PlayerA.innerText = "Сейчас ходит: X"
+        playerstatus--;
     }
 }
 
@@ -99,6 +108,8 @@ function newGame() {
     timeIndex2 = timeIndex1;
     timeIndex1++;
     timerstart = 0;
+    PlayerA.innerText = "Сейчас ходит: X"
+    playerstatus = 0;
 
 
     p.textContent = "0:00";
@@ -119,7 +130,6 @@ function init(e) {
  else stepCircle(e.target);
  win();
 }
-
 
 function win() {
   let comb = [
