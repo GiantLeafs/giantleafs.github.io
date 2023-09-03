@@ -22,3 +22,29 @@ body {
 .gradient-button:hover {
   background-position: right center;
 }
+
+.wf {
+    display: grid;
+}
+.s {
+    margin: 2% 40%;
+    background: #fc6f6f;
+    border-left: solid #ff0000 5px;
+    border-right: solid #ff0000 5px;
+    border-top: solid #ff0000 5px;
+    border-bottom: solid #ff0000 5px;
+	font-size:40px;
+}
+.wfhtml {
+    display: grid;
+}
+.shtml {
+    margin: 1% 11%;
+    border-left: solid  #ff0000 5px;
+    border-right: solid #ff0000 5px;
+    border-top: solid #ff0000 5px;
+    border-bottom: solid #ff0000 5px;
+	font-size:20px;
+ 
+   background: #fc6f6f;
+}
