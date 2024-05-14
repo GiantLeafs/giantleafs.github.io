@@ -1,7 +1,9 @@
 //ИГРОВОЕ ПОЛЕ
-const modal = document.querySelector('#modal');
+const newgamemodal = document.querySelector('#newgamemodal');
+const profilemodal = document.querySelector('#profilemodal');
 let game = document.querySelector('.game'),
 result = document.querySelector('.result'),
+image = document.querySelector('.image'),
 fields = document.querySelectorAll('.field'),
 btnGame = document.querySelector('.newgame'),
 step = false,
@@ -119,9 +121,10 @@ function newGame() {
     result.innerText = '';
     fields.forEach(item => {
         item.innerHTML = '';
-        item.classList.remove('x', 'o', 'active');
+        item.classList.remove('x', 'o', 'activeO', 'activeX');
     });
-    modal.style.display = 'none';
+    newgamemodal.style.display = 'none';
+    profilemodal.style.display = 'none';
     game.addEventListener('mouseup', init);
 };
 
@@ -148,17 +151,17 @@ for (let i = 0; i < comb.length; i++) {
     && fields[comb[i][1]].classList.contains('x')
     && fields[comb[i][2]].classList.contains('x')) {
     setTimeout(() => {
-        fields[comb[i][0]].classList.add('active');
-        fields[comb[i][1]].classList.add('active');
-        fields[comb[i][2]].classList.add('active');
+        fields[comb[i][0]].classList.add('activeX');
+        fields[comb[i][1]].classList.add('activeX');
+        fields[comb[i][2]].classList.add('activeX');
         result.innerText = "Выиграл X";
+        image.innerHTML = '<img src="images/win.png" alt="Победил O">';
         crossWin.play();
         statx++;
         clearTimeout(t);
-    
     });
     game.removeEventListener('click', init);
-    modal.style.display = 'block';
+    newgamemodal.style.display = 'block';
     return;
 }
 
@@ -166,33 +169,43 @@ else if (fields[comb[i][0]].classList.contains('o')
     && fields[comb[i][1]].classList.contains('o')
     && fields[comb[i][2]].classList.contains('o')) {
     setTimeout(() => {
-        fields[comb[i][0]].classList.add('active');
-        fields[comb[i][1]].classList.add('active');
-        fields[comb[i][2]].classList.add('active');
+        fields[comb[i][0]].classList.add('activeO');
+        fields[comb[i][1]].classList.add('activeO');
+        fields[comb[i][2]].classList.add('activeO');
         result.innerText = "Выиграл O";
+        image.innerHTML = '<img src="images/win.png" alt="Победил O">';
         circleWin.play();
         stato++;
         clearTimeout(t);
     });
     game.removeEventListener('click', init);
-    modal.style.display = 'block';
+    newgamemodal.style.display = 'block';
     return;
 }
 }
 for (let i = 0; i < comb.length; i++) {
 if (count == 9) {
     result.innerText = "Ничья";
+    image.innerHTML = '<img src="images/lose.png" alt="Ничья">';
     game.removeEventListener('click', init);
-    modal.style.display = 'block';
+    newgamemodal.style.display = 'block';
     XOWin.play();
     clearTimeout(t);
     return;
 }
 }
 }
-
 btnGame.addEventListener('click', newGame);
 game.addEventListener('mouseup', init);
+
+  
+
+function add() {
+    tick();
+    p.textContent = + (min > 9 ? min : "0" + min)
+       		 + ":" + (sec > 9 ? sec : "0" + sec);
+    timer();
+}
 
 
 //ТАЙМЕР
@@ -208,13 +221,89 @@ function tick(){
         min++;
     }
 }
+
 function add() {
     tick();
     p.textContent = + (min > 9 ? min : "0" + min)
        		 + ":" + (sec > 9 ? sec : "0" + sec);
     timer();
 }
+
 function timer() {
     t = setTimeout(add, 1000);
 }
 
+document.getElementById("update_profileForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "../php/update_profile.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status == 200) {
+                alert("Ваш запрос успешно отправлен"); 
+                document.getElementById("update_profileForm").reset(); 
+            } else {
+                console.error("Произошла ошибка при отправке запроса");
+            }
+        }
+    };
+    xhr.send(formData);
+    fetch('../php/get_profile.php')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('name').textContent = "Имя: " + data.name;
+      document.getElementById('surname').textContent = "Фамилия: " + data.surname;
+      document.getElementById('lastname').textContent = "Отчество: " + data.lastname;
+    })
+    .catch(error => {
+      console.error('Ошибка при получении данных пользователя:', error);
+    });
+});
+function checkinputs() {
+    var text1 = document.getElementById('lastnameinput').value;
+    var text2 = document.getElementById('nameinput').value;
+    var text3 = document.getElementById('surnameinput').value;
+
+    if(text1.length >= 2 && text2.length >= 2 && text3.length >= 2) {
+        document.getElementById('submitupdateprofile').disabled = false;
+    } else {
+        document.getElementById('submitupdateprofile').disabled = true;
+    }
+}
+
+
+document.getElementById('profilebtn').addEventListener('click', function() {
+    fetch('../php/get_profile.php')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('name').textContent = data.name;
+        document.getElementById('surname').textContent = data.surname;
+        document.getElementById('lastname').textContent = data.lastname;
+        if (document.getElementById('name').textContent == "") {
+        document.getElementById('name').textContent = "Имя: Нет данных";
+        document.getElementById('surname').textContent = "Фамилия: Нет данных";
+        document.getElementById('lastname').textContent = "Отчество: Нет данных";
+        }
+        else {
+        document.getElementById('name').textContent = "Имя: " + data.name;
+        document.getElementById('surname').textContent = "Фамилия: " + data.surname;
+        document.getElementById('lastname').textContent = "Отчество: " + data.lastname;
+        }
+        profilemodal.style.display = 'block';
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных пользователя:', error);
+      });
+  });
+
+ //Крестик модального окна
+  var span = document.getElementsByClassName("close")[0];
+  span.onclick = function() {
+      profilemodal.style.display = "none";
+  }
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      profilemodal.style.display = "none";
+    }
+  }

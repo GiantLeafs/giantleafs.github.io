@@ -1,75 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport">
-    <title>Крестики-нолики</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="images/icon.png" type="image/png">
+	<title>XO | Авторизация</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="images/icon.png"/>
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:600'><link rel="stylesheet" href="css/authpage.css">
 </head>
 <body>
-        <div id="modal" class="modal">
-        <div class="modal-content"> 
-            <div class = "result"></div>
-            <button class="newgame">Новая игра</button></div> </div>
-        <div class="statistic">
-        <table>
-        <th colspan="2">Статистика</th>
-        <tr>
-            <td>X</td>
-            <td><span id="sX">0</span></td>
-        </tr>
-        <tr>
-            <td>O</td>
-            <td><span id="sO">0</span></td>
-        </tr>
-        <tr>
-            <td>Ничьи</td>
-            <td><span id="sD">0</span></td>
-        </tr>
-        </table>
-        </div>
-        <div class="Time">
-            <table>
-            <th colspan="2">Последние 5 игр</th>
-            <tr>
-                <td><span id="TimeIndex1">0</span></td>
-                <td><span id="Time1">0:00</span></td>
-            </tr>
-            <tr>
-                <td><span id="TimeIndex2">0</span></td>
-                <td><span id="Time2">0:00</span></td>
-            </tr>
-            <tr>
-                <td><span id="TimeIndex3">0</span></td>
-                <td><span id="Time3">0:00</span></td>
-            </tr>
-            <tr>
-                <td><span id="TimeIndex4">0</span></td>
-                <td><span id="Time4">0:00</span></td>
-            </tr>
-            <tr>
-                <td><span id="TimeIndex5">0</span></td>
-                <td><span id="Time5">0:00</span></td>
-            </tr>
-            </table>
+    <div class="login-wrap">
+        <div class="login-html">
+            <div class="group">
+            <center><img class = "logostyle" src="images/logo.png" width="100"></center>
             </div>
-        <p class = "timer">0:00</p>
-        <div class="game">
-            <div class ="field"></div>
-            <div class ="field"></div>
-            <div class ="field"></div>
-            <div class ="field"></div>
-            <div class ="field"></div>
-            <div class ="field"></div>
-            <div class ="field"></div>
-            <div class ="field"></div>
-            <div class ="field"></div>
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Войти</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Зарегистрироваться</label>
+            <div class="login-form">
+                <form class = "sign-in-htm" id="sign-in-htm" action="php/login.php">
+                    <div class="group">
+                        <label class="label">Email</label>
+                        <input id="email" name="user" type="email" class="input"  required oninput="checkLoginInputs()">
+                    </div>
+                    <div class="group">
+                        <label class="label">Пароль</label>
+                        <input id="password" name="password" type="password" class="input" required oninput="checkLoginInputs()">
+                    </div>
+                    <div class="group">
+                        <input type="button" disabled class="button" id="login" value="Войти" onclick="loginUser()">
+                    </div>
+                    <div class="hr"></div>
+                    <div class="foot-lnk">
+                        <label class ="link" for="tab-2">Ещё не зарегистрировались?</a>
+                    </div>
+                </form>
+                <form name = "sign-up-js" class = "sign-up-htm" id="sign-up-htm">
+                    <div class="group">
+                        <label class="label">Email</label>
+                        <input id="regemail" name="regemail" type="email" class="input" required oninput="checkRegInputs()">
+                    </div>
+                    <div class="group">
+                        <label class="label">Пароль</label>
+                        <input id="regpassword" name="regpassword" type="password" class="input" required oninput="checkRegInputs()">
+                    </div>
+                    <div class="group">
+                        <input type="button" disabled class="button" id="registration" value="Зарегистрироваться" onclick="registerUser()">
+                    </div>
+                    <div class="hr"></div>
+                    <div class="foot-lnk">
+                        <label class ="link" for="tab-1">Уже зарегистрированы?</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        <p class = "PlayerActive" id = "PlayerA"> Сейчас ходит: X</p>
     </div>
-    </div>
-    <script src="js/main.js"></script>
-</body>
-</html>
+    <script src="js/auth.js"></script>
+    </body>
+    </html>
